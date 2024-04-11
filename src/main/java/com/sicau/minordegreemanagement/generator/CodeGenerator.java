@@ -47,7 +47,7 @@ public class CodeGenerator {
         gc.setOutputDir(projectPath + "/src/main/java");
 //        String projectPath = "D://mybatisCode/graduationProjectProduct";
 //        gc.setOutputDir(projectPath);
-        gc.setAuthor("Hu Langsha：2024/3/28");
+        gc.setAuthor("Wang mengna：2024/3/20");
         //设置完之后是否打开资源管理器
         gc.setOpen(false);
         gc.setSwagger2(false);
@@ -68,7 +68,7 @@ public class CodeGenerator {
         dsc.setUsername("root");
         dsc.setPassword("123456");
         dsc.setUrl(
-                "jdbc:mysql://127.0.0.1:3306/hlsaa?useUnicode=true&characterEncoding=utf8");
+                "jdbc:mysql://127.0.0.1:3306/minor_degree_management?useUnicode=true&characterEncoding=utf8");
         mpg.setDataSource(dsc);
         // 包配置
         PackageConfig pc = new PackageConfig();
@@ -104,7 +104,7 @@ public class CodeGenerator {
         // strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
         strategy.setRestControllerStyle(true);
         // strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
-        strategy.setInclude("t_course_sessions");// 表名
+//        strategy.setInclude("t_course_sessions");// 表名
         // strategy.setSuperEntityColumns("id");
         // strategy.setControllerMappingHyphenStyle(true);
         // strategy.setTablePrefix(pc.getModuleName() + "_");

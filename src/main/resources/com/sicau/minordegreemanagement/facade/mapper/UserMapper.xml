@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sicau.minordegreemanagement.facade.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sicau.minordegreemanagement.facade.entity.User">
+        <id column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="sex" property="sex" />
+        <result column="password" property="password" />
+        <result column="create_time" property="createTime" />
+        <result column="login_name" property="loginName" />
+        <result column="contact" property="contact" />
+        <result column="time_of_enrollment" property="timeOfEnrollment" />
+        <result column="head_portrait" property="headPortrait" />
+        <result column="isDelete" property="isDelete" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, user_name, sex, password, create_time, login_name, contact, time_of_enrollment, head_portrait, isDelete
+    </sql>
+    <select id="getUserRoleAndPermissionList"
+            resultType="com.sicau.minordegreemanagement.facade.vo.UserRolePermission">
+        SELECT
+        u.user_id userId,
+        u.user_name userName,
+        r.role_name roleName,
+        r.role_id roleId,
+        p.permission_id permissionId,
+        p.permission_url permissionUrl
+        FROM
+        t_user u
+        INNER JOIN t_user_role ur ON u.user_id = ur.user_id
+        INNER JOIN t_role r ON r.role_id = ur.role_id
+        INNER JOIN t_role_permission rp ON r.role_id = rp.role_id
+        INNER JOIN t_permission p ON p.permission_id = rp.permission_id
+        WHERE
+        u.isDelete = 1
+        <if test="userId != ''">
+            AND u.user_id = #{userId}
+        </if>
+    </select>
+
+</mapper>

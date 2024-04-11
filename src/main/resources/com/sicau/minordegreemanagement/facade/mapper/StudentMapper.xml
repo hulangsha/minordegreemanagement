@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sicau.minordegreemanagement.facade.mapper.StudentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sicau.minordegreemanagement.facade.entity.Student">
+        <id column="student_id" property="studentId" />
+        <result column="student_name" property="studentName" />
+        <result column="student_number" property="studentNumber" />
+        <result column="major_name" property="majorName" />
+        <result column="class_id" property="classId" />
+        <result column="class_name" property="className" />
+        <result column="college_id" property="collegeId" />
+        <result column="credits" property="credits" />
+        <result column="grade" property="grade" />
+        <result column="sex" property="sex" />
+        <result column="length_of_schooling" property="lengthOfSchooling" />
+        <result column="level_of_cultivation" property="levelOfCultivation" />
+        <result column="school_status" property="schoolStatus" />
+        <result column="time_of_enrollment" property="timeOfEnrollment" />
+        <result column="nation" property="nation" />
+        <result column="mailing_address" property="mailingAddress" />
+        <result column="home_telephone" property="homeTelephone" />
+        <result column="id_card" property="idCard" />
+        <result column="qq_number" property="qqNumber" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        student_id, student_name, student_number, major_name, class_id, class_name, college_id, credits, grade, sex, length_of_schooling, level_of_cultivation, school_status, time_of_enrollment, nation, mailing_address, home_telephone, id_card, qq_number
+    </sql>
+
+</mapper>
