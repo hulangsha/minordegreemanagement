@@ -2,6 +2,7 @@ package com.sicau.minordegreemanagement.facade.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sicau.minordegreemanagement.facade.entity.MinorDegree;
+import com.sicau.minordegreemanagement.facade.vo.MinorDegreeInfo;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.sicau.minordegreemanagement.facade.entity.MinorDegree;
  */
 public interface MinorDegreeService extends IService<MinorDegree> {
 
+    boolean addMinorDegree(MinorDegreeInfo minorDegreeInfo);
 }

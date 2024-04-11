@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sicau.minordegreemanagement.facade.entity.MinorDegree;
 import com.sicau.minordegreemanagement.facade.mapper.MinorDegreeMapper;
 import com.sicau.minordegreemanagement.facade.service.MinorDegreeService;
+import com.sicau.minordegreemanagement.facade.vo.MinorDegreeInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +19,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class MinorDegreeServiceImpl extends ServiceImpl<MinorDegreeMapper, MinorDegree> implements MinorDegreeService {
 
+    @Override
+    public boolean addMinorDegree(MinorDegreeInfo minorDegreeInfo) {
+        MinorDegree minorDegree = new MinorDegree();
+        BeanUtils.copyProperties(minorDegreeInfo, minorDegree);
+        return this.save(minorDegree);
+    }
 }

@@ -1,8 +1,14 @@
 package com.sicau.minordegreemanagement.facade.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.alibaba.fastjson.JSONObject;
+import com.sicau.minordegreemanagement.common.result.Result;
+import com.sicau.minordegreemanagement.facade.entity.Teacher;
+import com.sicau.minordegreemanagement.facade.service.TeacherService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -13,7 +19,24 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2024-04-11
  */
 @RestController
-@RequestMapping("/facade/teacher")
+@RequestMapping("/api/teacher")
+@Api(tags = "教师管理模块")
 public class TeacherController {
 
+    @Autowired
+    private TeacherService teacherService;
+
+    @GetMapping("/getTeacherInfo")
+    @ApiOperation(value = "查询教师个人信息", notes = "查询教师个人信息必须传入教师自己的id")
+    public Result<?> getTeacherInfo (@RequestParam("teacherId") Integer id) {
+        Teacher teacher = teacherService.getTeacherInfoById(id);
+        if (null == teacher) {
+            throw new RuntimeException("没有查到教师信息");
+        }
+
+        JSONObject resultJSON = new JSONObject();
+        resultJSON.put("teacher", teacher);
+        return new Result<>().success().put(resultJSON);
+
+    }
 }

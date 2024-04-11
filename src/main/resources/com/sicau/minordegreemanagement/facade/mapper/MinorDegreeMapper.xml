@@ -7,13 +7,14 @@
         <id column="minor_degree_id" property="minorDegreeId" />
         <result column="college_id" property="collegeId" />
         <result column="college_name" property="collegeName" />
-        <result column="course_id" property="courseId" />
-        <result column="course_name" property="courseName" />
+        <result column="major_name" property="majorName" />
+        <result column="major_id" property="majorId" />
+        <result column="user_id" property="userId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        minor_degree_id, college_id, college_name, course_id, course_name
+        minor_degree_id, college_id, major_id, major_name, college_name, user_id
     </sql>
 
 </mapper>

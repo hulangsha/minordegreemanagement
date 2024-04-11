@@ -13,5 +13,8 @@
     <sql id="Base_Column_List">
         college_id, college_name, college_code
     </sql>
+    <select id="getCollegeInfo" resultType="com.sicau.minordegreemanagement.facade.entity.College">
+        select * from t_college where college_id &lt;&gt; #{collegeId}
+    </select>
 
 </mapper>

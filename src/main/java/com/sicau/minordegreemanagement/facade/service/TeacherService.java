@@ -13,4 +13,5 @@ import com.sicau.minordegreemanagement.facade.entity.Teacher;
  */
 public interface TeacherService extends IService<Teacher> {
 
+    Teacher getTeacherInfoById(Integer id);
 }

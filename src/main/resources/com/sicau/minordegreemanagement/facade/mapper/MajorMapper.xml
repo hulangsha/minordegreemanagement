@@ -14,5 +14,15 @@
     <sql id="Base_Column_List">
         major_id, major_name, major_code, college_code
     </sql>
+    <select id="getMajorInfo" resultType="com.sicau.minordegreemanagement.facade.entity.Major">
+        select * from t_major where major_id &lt;&gt; #{majorId}
+    </select>
+    <select id="selectMajorListInfoByCode"  resultType="com.sicau.minordegreemanagement.facade.entity.Major" parameterType="java.util.List">
+        select * from t_major
+        where college_code in
+        <foreach collection="collectCodeList" item="collectCode" open="(" separator="," close=")">
+            #{collectCode}
+        </foreach>
+    </select>
 
 </mapper>

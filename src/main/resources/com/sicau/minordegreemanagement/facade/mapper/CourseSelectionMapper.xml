@@ -14,5 +14,9 @@
     <sql id="Base_Column_List">
         selection_id, student_id, course_id, selection_time
     </sql>
+    <select id="getCourseSelectionInfo"
+            resultType="com.sicau.minordegreemanagement.facade.entity.CourseSelection">
+        select * from t_course_selection where student_id = #{studentId}
+    </select>
 
 </mapper>

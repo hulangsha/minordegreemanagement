@@ -46,7 +46,7 @@ public class Major implements Serializable {
      * 学院代码
      */
     @TableField("college_code")
-    private Integer collegeCode;
+    private String collegeCode;
 
 
 }

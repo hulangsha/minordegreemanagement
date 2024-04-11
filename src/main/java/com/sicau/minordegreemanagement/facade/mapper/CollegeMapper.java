@@ -3,6 +3,8 @@ package com.sicau.minordegreemanagement.facade.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sicau.minordegreemanagement.facade.entity.College;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,4 +15,5 @@ import com.sicau.minordegreemanagement.facade.entity.College;
  */
 public interface CollegeMapper extends BaseMapper<College> {
 
+    List<College> getCollegeInfo(Integer collegeId);
 }

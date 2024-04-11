@@ -2,6 +2,10 @@ package com.sicau.minordegreemanagement.facade.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sicau.minordegreemanagement.facade.entity.Major;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -13,4 +17,8 @@ import com.sicau.minordegreemanagement.facade.entity.Major;
  */
 public interface MajorMapper extends BaseMapper<Major> {
 
+    List<Major> getMajorInfo(Integer majorId);
+
+
+    List<Major> selectMajorListInfoByCode(@Param("collectCodeList") List<String> collectCodeList);
 }
