@@ -3,6 +3,8 @@ package com.sicau.minordegreemanagement.facade.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sicau.minordegreemanagement.facade.entity.Class;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,5 @@ import com.sicau.minordegreemanagement.facade.entity.Class;
  */
 public interface ClassService extends IService<Class> {
 
+    List<java.lang.Class> getClassInfoList();
 }

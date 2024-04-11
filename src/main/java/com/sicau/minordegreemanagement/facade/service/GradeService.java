@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sicau.minordegreemanagement.facade.entity.Grade;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -15,5 +16,5 @@ import java.util.List;
  */
 public interface GradeService extends IService<Grade> {
 
-    List<Grade> getGradeInfoList(Integer userId);
+    List<Map<String, Object>> getGradeInfoList(Integer userId);
 }

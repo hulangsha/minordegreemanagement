@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,7 +34,7 @@ public class GradeController {
     @GetMapping("/getGradeInfo")
     @ApiOperation(value = "查询成绩", notes = "需要传输自己的user_id")
     public Result<?> getGradeInfo (@RequestParam Integer userId) {
-        List<Grade> gradeList = gradeService.getGradeInfoList(userId);
+        List<Map<String, Object>> gradeList = gradeService.getGradeInfoList(userId);
         if (gradeList.isEmpty()) {
             return new Result<>().fail();
         }

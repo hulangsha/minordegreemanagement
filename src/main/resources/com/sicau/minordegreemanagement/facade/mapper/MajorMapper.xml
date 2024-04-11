@@ -24,5 +24,8 @@
             #{collectCode}
         </foreach>
     </select>
+    <select id="selectByMajorCode" resultType="com.sicau.minordegreemanagement.facade.entity.Major">
+        select * from t_major where major_code = #{majorCode}
+    </select>
 
 </mapper>

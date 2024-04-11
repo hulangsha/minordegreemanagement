@@ -4,13 +4,20 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sicau.minordegreemanagement.facade.entity.Course;
 import com.sicau.minordegreemanagement.facade.entity.Grade;
+import com.sicau.minordegreemanagement.facade.entity.Major;
+import com.sicau.minordegreemanagement.facade.entity.Teacher;
 import com.sicau.minordegreemanagement.facade.mapper.CourseMapper;
 import com.sicau.minordegreemanagement.facade.mapper.GradeMapper;
+import com.sicau.minordegreemanagement.facade.mapper.MajorMapper;
+import com.sicau.minordegreemanagement.facade.mapper.TeacherMapper;
 import com.sicau.minordegreemanagement.facade.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -26,15 +33,45 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private GradeMapper gradeMapper;
+
+    @Autowired
+    private CourseMapper courseMapper;
+
+    @Autowired
+    private MajorMapper majorMapper;
+
+    @Autowired
+    private TeacherMapper teacherMapper;
     @Override
-    public List<Course> getCourseInfoList() {
-        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
-        return this.list(queryWrapper);
+    public List<Map<String, Object>> getCourseInfoList() {
+        QueryWrapper<Course> courseQueryWrapperWrapper = new QueryWrapper<>();
+        List<Course> courseList = courseMapper.selectList(courseQueryWrapperWrapper);
+
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        for (Course course : courseList) {
+            HashMap<String , Object> resultMap = new HashMap<>();
+            Major major = majorMapper.selectByMajorCode(course.getMajorCode());
+            if (major != null) {
+                resultMap.put("majorName", major.getMajorName());
+            }
+            Teacher teacher = teacherMapper.selectById(course.getTeacherId());
+            if (teacher != null) {
+                resultMap.put("teacherName", teacher.getName());
+            }
+            resultMap.put("courseId", course.getCourseId());
+            resultMap.put("courseName", course.getCourseName());
+            resultMap.put("majorCode", course.getMajorCode());
+            resultMap.put("courseCode", course.getCourseCode());
+            resultMap.put("teacherId", course.getTeacherId());
+            resultList.add(resultMap);
+        }
+        return resultList;
     }
 
     @Override
-    public List<Course> getTokenCourseInfo(Integer userId) {
+    public List<Map<String, Object>> getTokenCourseInfo(Integer userId) {
         List<Grade> gradeList = gradeMapper.queryTokenCourse(userId);
+        List<Map<String, Object>> resultList = new ArrayList<>();
         if (gradeList.isEmpty()) {
             return null;
         }
@@ -48,12 +85,31 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return this.list(queryWrapper);
+        List<Course> courseList = courseMapper.selectList(queryWrapper);
+        for (Course course : courseList) {
+            HashMap<String , Object> resultMap = new HashMap<>();
+            Major major = majorMapper.selectByMajorCode(course.getMajorCode());
+            if (major != null) {
+                resultMap.put("majorName", major.getMajorName());
+            }
+            Teacher teacher = teacherMapper.selectById(course.getTeacherId());
+            if (teacher != null) {
+                resultMap.put("teacherName", teacher.getName());
+            }
+            resultMap.put("courseId", course.getCourseId());
+            resultMap.put("courseName", course.getCourseName());
+            resultMap.put("majorCode", course.getMajorCode());
+            resultMap.put("courseCode", course.getCourseCode());
+            resultMap.put("teacherId", course.getTeacherId());
+            resultList.add(resultMap);
+        }
+        return resultList;
     }
 
     @Override
-    public List<Course> getUnTokenCourseInfo(Integer userId) {
+    public List<Map<String, Object>> getUnTokenCourseInfo(Integer userId) {
         List<Grade> gradeList = gradeMapper.queryTokenCourse(userId);
+        List<Map<String, Object>> resultList = new ArrayList<>();
         if (gradeList.isEmpty()) {
             return null;
         }
@@ -67,6 +123,24 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return this.list(queryWrapper);
+        List<Course> courseList = courseMapper.selectList(queryWrapper);
+        for (Course course : courseList) {
+            HashMap<String , Object> resultMap = new HashMap<>();
+            Major major = majorMapper.selectByMajorCode(course.getMajorCode());
+            if (major != null) {
+                resultMap.put("majorName", major.getMajorName());
+            }
+            Teacher teacher = teacherMapper.selectById(course.getTeacherId());
+            if (teacher != null) {
+                resultMap.put("teacherName", teacher.getName());
+            }
+            resultMap.put("courseId", course.getCourseId());
+            resultMap.put("courseName", course.getCourseName());
+            resultMap.put("majorCode", course.getMajorCode());
+            resultMap.put("courseCode", course.getCourseCode());
+            resultMap.put("teacherId", course.getTeacherId());
+            resultList.add(resultMap);
+        }
+        return resultList;
     }
 }

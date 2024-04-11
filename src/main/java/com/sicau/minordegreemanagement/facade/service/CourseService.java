@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sicau.minordegreemanagement.facade.entity.Course;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -15,9 +16,9 @@ import java.util.List;
  */
 public interface CourseService extends IService<Course> {
 
-    List<Course> getCourseInfoList();
+    List<Map<String, Object>> getCourseInfoList();
 
-    List<Course> getTokenCourseInfo(Integer userId);
+    List<Map<String, Object>> getTokenCourseInfo(Integer userId);
 
-    List<Course> getUnTokenCourseInfo(Integer userId);
+    List<Map<String, Object>> getUnTokenCourseInfo(Integer userId);
 }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -34,7 +36,7 @@ public class CourseController {
     @GetMapping("/getCourseList")
     @ApiOperation(value = "所有课程查询", notes = "无需任何参数")
     public Result<?> getCourseInfoList() {
-        List<Course> courseList = courseService.getCourseInfoList();
+        List<Map<String, Object>> courseList = courseService.getCourseInfoList();
         if (courseList.isEmpty()) {
             return new Result<>().fail();
         }
@@ -44,7 +46,7 @@ public class CourseController {
     @GetMapping("/getTokenCourse")
     @ApiOperation(value = "已修读课程查询",notes = "需要将学生的id传进来，也就是user_id")
     public Result<?> getTokenCourseInfo(@RequestParam Integer userId) {
-        List<Course> tokenCourseList = courseService.getTokenCourseInfo(userId);
+        List<Map<String, Object>> tokenCourseList = courseService.getTokenCourseInfo(userId);
         if (tokenCourseList.isEmpty()) {
             return new Result<>().fail();
         }
@@ -54,7 +56,7 @@ public class CourseController {
     @GetMapping("/getUnTokenCourse")
     @ApiOperation(value = "未修读课程查询",notes = "需要将学生的id传进来，也就是user_id")
     public Result<?> getUnTokenCourseInfo(@RequestParam Integer userId) {
-        List<Course> unTokenCourseList = courseService.getUnTokenCourseInfo(userId);
+        List<Map<String, Object>> unTokenCourseList = courseService.getUnTokenCourseInfo(userId);
         if (unTokenCourseList.isEmpty()) {
             return new Result<>().fail();
         }

@@ -21,4 +21,6 @@ public interface MajorMapper extends BaseMapper<Major> {
 
 
     List<Major> selectMajorListInfoByCode(@Param("collectCodeList") List<String> collectCodeList);
+
+    Major selectByMajorCode(String majorCode);
 }

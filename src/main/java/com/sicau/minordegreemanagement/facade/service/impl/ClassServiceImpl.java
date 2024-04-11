@@ -6,6 +6,8 @@ import com.sicau.minordegreemanagement.facade.mapper.ClassMapper;
 import com.sicau.minordegreemanagement.facade.service.ClassService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -17,4 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class> implements ClassService {
 
+    @Override
+    public List<java.lang.Class> getClassInfoList() {
+        return null;
+    }
 }
