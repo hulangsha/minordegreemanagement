@@ -25,7 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/course")
-@Api("课程管理模块")
+@Api(tags = "课程管理模块")
 public class CourseController {
 
     @Autowired

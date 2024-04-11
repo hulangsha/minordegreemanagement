@@ -64,7 +64,7 @@ public class UserRealm extends AuthorizingRealm {
         HashSet<String> roleSet = new HashSet<>();
         HashSet<String> permissionSet = new HashSet<>();
         for (UserRolePermission userRolePermission : userRolePermissionList) {
-            roleSet.add(userRolePermission.getRoleName());
+            roleSet.add(userRolePermission.getRoleCode());
             permissionSet.add(userRolePermission.getPermissionUrl());
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

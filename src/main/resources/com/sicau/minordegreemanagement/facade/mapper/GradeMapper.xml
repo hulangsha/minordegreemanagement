@@ -16,7 +16,16 @@
         grade_id, student_id, course_id, grade, minor_degree_state
     </sql>
     <select id="queryTokenCourse" resultType="com.sicau.minordegreemanagement.facade.entity.Grade">
-        SELECT student_id,course_id FROM t_grade GROUP BY student_id,course_id HAVING student_id = 19
+        SELECT student_id,course_id FROM t_grade GROUP BY student_id,course_id HAVING student_id = #{studentId}
+    </select>
+    <select id="queryGradeInfoList" resultType="com.sicau.minordegreemanagement.facade.entity.Grade">
+        SELECT * FROM t_grade
+        WHERE (student_id, course_id) IN (
+            SELECT student_id, course_id FROM t_grade
+            GROUP BY student_id, course_id
+            HAVING student_id = #{studentId}
+        );
+
     </select>
 
 </mapper>

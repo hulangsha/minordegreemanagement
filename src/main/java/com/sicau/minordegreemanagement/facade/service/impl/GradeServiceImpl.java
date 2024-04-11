@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sicau.minordegreemanagement.facade.entity.Grade;
 import com.sicau.minordegreemanagement.facade.mapper.GradeMapper;
 import com.sicau.minordegreemanagement.facade.service.GradeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class GradeServiceImpl extends ServiceImpl<GradeMapper, Grade> implements GradeService {
 
+    @Autowired
+    private GradeMapper gradeMapper;
+    @Override
+    public List<Grade> getGradeInfoList(Integer userId) {
+        List<Grade> gradeList = gradeMapper.queryGradeInfoList(userId);
+        if (gradeList.isEmpty()) {
+            return null;
+        }
+        return gradeList;
+    }
 }

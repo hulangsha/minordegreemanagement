@@ -16,4 +16,6 @@ import java.util.List;
 public interface GradeMapper extends BaseMapper<Grade> {
 
     List<Grade> queryTokenCourse(Integer userId);
+
+    List<Grade> queryGradeInfoList(Integer userId);
 }
