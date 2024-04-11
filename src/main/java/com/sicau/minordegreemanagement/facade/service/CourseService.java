@@ -16,4 +16,8 @@ import java.util.List;
 public interface CourseService extends IService<Course> {
 
     List<Course> getCourseInfoList();
+
+    List<Course> getTokenCourseInfo(Integer userId);
+
+    List<Course> getUnTokenCourseInfo(Integer userId);
 }

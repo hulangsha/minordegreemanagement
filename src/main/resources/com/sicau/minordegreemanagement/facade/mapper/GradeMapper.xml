@@ -15,5 +15,8 @@
     <sql id="Base_Column_List">
         grade_id, student_id, course_id, grade, minor_degree_state
     </sql>
+    <select id="queryTokenCourse" resultType="com.sicau.minordegreemanagement.facade.entity.Grade">
+        SELECT student_id,course_id FROM t_grade GROUP BY student_id,course_id HAVING student_id = 19
+    </select>
 
 </mapper>

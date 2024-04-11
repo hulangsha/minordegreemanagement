@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -34,12 +35,31 @@ public class CourseController {
     @ApiOperation(value = "所有课程查询", notes = "无需任何参数")
     public Result<?> getCourseInfoList() {
         List<Course> courseList = courseService.getCourseInfoList();
-        JSONObject resultJSON = new JSONObject();
         if (courseList.isEmpty()) {
             return new Result<>().fail();
         }
-        return new Result<>().put(courseList);
+        return new Result<>().success().put(courseList);
     }
 
-//    @GetMapping("/get")
+    @GetMapping("/getTokenCourse")
+    @ApiOperation(value = "已修读课程查询",notes = "需要将学生的id传进来，也就是user_id")
+    public Result<?> getTokenCourseInfo(@RequestParam Integer userId) {
+        List<Course> tokenCourseList = courseService.getTokenCourseInfo(userId);
+        if (tokenCourseList.isEmpty()) {
+            return new Result<>().fail();
+        }
+        return new Result<>().success().put(tokenCourseList);
+    }
+
+    @GetMapping("/getUnTokenCourse")
+    @ApiOperation(value = "未修读课程查询",notes = "需要将学生的id传进来，也就是user_id")
+    public Result<?> getUnTokenCourseInfo(@RequestParam Integer userId) {
+        List<Course> unTokenCourseList = courseService.getUnTokenCourseInfo(userId);
+        if (unTokenCourseList.isEmpty()) {
+            return new Result<>().fail();
+        }
+        return new Result<>().success().put(unTokenCourseList);
+    }
+
+
 }
