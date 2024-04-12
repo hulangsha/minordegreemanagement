@@ -8,6 +8,7 @@ import com.sicau.minordegreemanagement.facade.mapper.UserMapper;
 import com.sicau.minordegreemanagement.facade.service.UserService;
 import com.sicau.minordegreemanagement.facade.vo.UserInfo;
 import com.sicau.minordegreemanagement.facade.vo.UserRolePermission;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.List;
  * @since 2024-04-11
  */
 @Service
+@Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired

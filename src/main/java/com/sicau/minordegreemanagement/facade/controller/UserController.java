@@ -10,6 +10,7 @@ import com.sicau.minordegreemanagement.facade.vo.UserInfo;
 import com.sicau.minordegreemanagement.facade.vo.UserRolePermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 @Api(tags = "用户管理模块")
+@Slf4j
 public class UserController {
 
     @Autowired

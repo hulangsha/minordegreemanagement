@@ -26,6 +26,7 @@
         u.user_id userId,
         u.user_name userName,
         r.role_name roleName,
+        r.role_code roleCode,
         r.role_id roleId,
         p.permission_id permissionId,
         p.permission_url permissionUrl
