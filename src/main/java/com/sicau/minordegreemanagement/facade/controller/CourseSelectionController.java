@@ -5,13 +5,11 @@ import com.sicau.minordegreemanagement.common.result.Result;
 import com.sicau.minordegreemanagement.facade.entity.Course;
 import com.sicau.minordegreemanagement.facade.entity.CourseSelection;
 import com.sicau.minordegreemanagement.facade.service.CourseSelectionService;
+import com.sicau.minordegreemanagement.facade.vo.CourseSelectionInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,10 +29,13 @@ public class CourseSelectionController {
     @Autowired
     private CourseSelectionService courseSelectionService;
 
-    @GetMapping("/getInfo")
-    @ApiOperation(value = "网上选课信息", notes = "需要将自己的id传入")
-    public Result<?> getCourseSelection(@RequestParam Integer userId) {
-        List<Course> courseSelectionList = courseSelectionService.getCourseSelection(userId);
-        return null;
+    @PostMapping("/addCourseSelection")
+    @ApiOperation(value = "添加选课", notes = "必须要课程id和学生id，也只需要这两个就够够了，学生id就是Userid")
+    public Result<?> getCourseSelection(@RequestBody CourseSelectionInfo courseSelectionInfo) {
+        boolean result = courseSelectionService.addCourseSelection(courseSelectionInfo);
+        if (result) {
+            return new Result<>().success().put(result);
+        }
+        return new Result<>().fail();
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -70,7 +71,12 @@ public class CourseController {
         if (courseSelectionList.isEmpty()) {
             return new Result<>().fail();
         }
-        return new Result<>().success().put(courseSelectionList);
+        JSONObject resultJSON = new JSONObject();
+        // 获取当前的日期和时间
+        LocalDateTime currentTime = LocalDateTime.now();
+        resultJSON.put("currentTime", currentTime);
+        resultJSON.put("courseSelectionList", courseSelectionList);
+        return new Result<>().success().put(resultJSON);
     }
 
 

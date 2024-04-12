@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,7 +29,7 @@ public class GraduationController {
 
     @GetMapping("/getGraduationInfo")
     @ApiOperation(value = "毕业审核", notes = "需要传递的参数 必须要的是 学院名称和审核状态")
-    public Result<?> getGraduationInfo(){
+    public Result<?> getGraduationInfo(@RequestParam String collegeName, String checkState){
         return null;
     }
 }
