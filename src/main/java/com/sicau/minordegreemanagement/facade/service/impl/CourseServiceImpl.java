@@ -159,8 +159,11 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         QueryWrapper<Grade> gradeQueryWrapper = new QueryWrapper<>();
         gradeQueryWrapper.eq("student_id", userId);
         List<Grade> gradeList = gradeMapper.selectList(gradeQueryWrapper);
+        Integer courseId = gradeList.get(0).getCourseId();
+        Course course = courseMapper.selectById(courseId);
+        String formerMajorCode = course.getMajorCode();
         List<Integer> courseIdList = gradeList.stream().map(Grade::getCourseId).collect(Collectors.toList());
-        List<Course> formerCourseList = courseMapper.selectCourseInfoByCourseId(courseIdList);
+        List<Course> formerCourseList = courseMapper.selectCourseInfoByCourseId(courseIdList, formerMajorCode);
         //拿到所有可选选修的课程信息
         List<Course> allCourseList = new ArrayList<>();
         allCourseList.addAll(minorCourseList);

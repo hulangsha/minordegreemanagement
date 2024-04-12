@@ -20,5 +20,5 @@ public interface CourseMapper extends BaseMapper<Course> {
 
     List<Course> selectByMajorCode(String majorCode);
 
-    List<Course> selectCourseInfoByCourseId(@Param("courseIdList") List<Integer> courseIdList);
+    List<Course> selectCourseInfoByCourseId(@Param("courseIdList") List<Integer> courseIdList, String majorCode);
 }

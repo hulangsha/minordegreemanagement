@@ -59,11 +59,11 @@ public class CourseSelectionServiceImpl extends ServiceImpl<CourseSelectionMappe
         gradeQueryWrapper.eq("student_id", userId);
         List<Grade> gradeList = gradeMapper.selectList(gradeQueryWrapper);
         List<Integer> courseIdList = gradeList.stream().map(Grade::getCourseId).collect(Collectors.toList());
-        List<Course> formerCourseList = courseMapper.selectCourseInfoByCourseId(courseIdList);
+//        List<Course> formerCourseList = courseMapper.selectCourseInfoByCourseId(courseIdList);
         //拿到所有可选选修的课程信息
         List<Course> allCourseList = new ArrayList<>();
         allCourseList.addAll(minorCourseList);
-        allCourseList.addAll(formerCourseList);
+//        allCourseList.addAll(formerCourseList);
 
         return allCourseList;
     }
