@@ -59,17 +59,18 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
         User student = (User) subject.getPrincipal();
         //选课信息
-        CourseSelection courseSelection = null;
+        List<CourseSelection> courseSelection = null;
         try {
-            courseSelection = courseSelectionMapper.selectById(student.getUserId());
+            courseSelection = courseSelectionMapper.selectByUserId(student.getUserId());
         } catch (Exception e) {
             log.info("你又有什么毛病：{}", e);
             throw new RuntimeException(e);
         }
+        List<Integer> courseIdList = courseSelection.stream().map(CourseSelection::getCourseId).collect(Collectors.toList());
         //课程信息
-        Course course = courseMapper.selectById(courseSelection.getCourseId());
+        List<Course> courseList = courseMapper.selectByCourseIdList(courseIdList);
         //专业信息
-        String majorCode = course.getMajorCode();
+        String majorCode = courseList.get(CommonCode.CONST_NUMBER_ZERO.getCode()).getMajorCode();
         Integer majorId = Integer.valueOf(majorCode.substring(majorCode.length() - 1));
         Major major = majorMapper.selectById(majorId);
         //学院信息，并拿到能辅修的学位

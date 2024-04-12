@@ -2,6 +2,9 @@ package com.sicau.minordegreemanagement.facade.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sicau.minordegreemanagement.facade.entity.Course;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.sicau.minordegreemanagement.facade.entity.Course;
  */
 public interface CourseMapper extends BaseMapper<Course> {
 
+    List<Course> selectByCourseIdList(@Param("courseIdList") List<Integer> courseIdList);
 }

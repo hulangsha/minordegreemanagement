@@ -58,7 +58,6 @@ public class GradeServiceImpl extends ServiceImpl<GradeMapper, Grade> implements
             resultMap.put("grade", grade.getGrade());
             resultMap.put("minorDegreeState", grade.getMinorDegreeState());
             resultList.add(resultMap);
-
         }
         return resultList;
     }
@@ -88,7 +87,10 @@ public class GradeServiceImpl extends ServiceImpl<GradeMapper, Grade> implements
             if (course != null && teacher.getTeacherId().equals(teacherId)) {
                 resultMap.put("courseName", course.getCourseName());
             }
-            resultList.add(resultMap);
+            if (!resultMap.isEmpty()) {
+                resultList.add(resultMap);
+            }
+
         }
         return resultList;
     }

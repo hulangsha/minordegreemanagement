@@ -15,5 +15,12 @@
     <sql id="Base_Column_List">
         course_id, course_name, major_code, course_code, teacher_id
     </sql>
+    <select id="selectByCourseIdList" resultType="com.sicau.minordegreemanagement.facade.entity.Course" parameterType="java.util.List">
+        select * from t_course
+        where course_id in
+        <foreach collection="courseIdList" item="courseId" open="(" close=")" separator=",">
+            #{courseId}
+        </foreach>
+    </select>
 
 </mapper>

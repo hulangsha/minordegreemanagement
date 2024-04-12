@@ -18,5 +18,8 @@
             resultType="com.sicau.minordegreemanagement.facade.entity.CourseSelection">
         select * from t_course_selection where student_id = #{studentId}
     </select>
+    <select id="selectByUserId" resultType="com.sicau.minordegreemanagement.facade.entity.CourseSelection">
+        select * from t_course_selection where student_id = #{studentId}
+    </select>
 
 </mapper>
