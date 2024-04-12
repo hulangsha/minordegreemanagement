@@ -17,4 +17,8 @@ import java.util.List;
 public interface CourseMapper extends BaseMapper<Course> {
 
     List<Course> selectByCourseIdList(@Param("courseIdList") List<Integer> courseIdList);
+
+    List<Course> selectByMajorCode(String majorCode);
+
+    List<Course> selectCourseInfoByCourseId(@Param("courseIdList") List<Integer> courseIdList);
 }

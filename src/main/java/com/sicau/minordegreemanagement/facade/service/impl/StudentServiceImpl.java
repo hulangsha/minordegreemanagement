@@ -13,8 +13,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -43,6 +42,13 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Autowired
     private CollegeMapper collegeMapper;
+
+    @Autowired
+    private TeacherMapper teacherMapper;
+
+    @Autowired
+    private ClassTableMapper classTableMapper;
+
     @Override
     public Student getStudentInfoById(Integer studentId) {
         QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
@@ -87,5 +93,54 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return jsonObject;
     }
 
+    @Override
+    public List<Map<String, Object>> getStudentInfo(Integer userId) {
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        List<Student> studentList = null;
+        try {
+            studentList = studentMapper.selectList(queryWrapper);
+        } catch (Exception e) {
+            log.info("你又怎么了大哥，{}", e);
+            throw new RuntimeException(e);
+        }
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        for (Student student : studentList) {
+            Teacher teacher = teacherMapper.selectById(userId);
+            ClassTable classTable = classTableMapper.selectById(student.getClassId());
+            HashMap<String , Object> resultMap = new HashMap<>();
+            if (teacher != null && teacher.getTeacherNumber().equals(classTable.getTeacherNumber())) {
+                resultMap.put("studentId", student.getStudentId());
+                resultMap.put("studentName", student.getStudentName());
+                resultMap.put("studentNumber", student.getStudentNumber());
+                resultMap.put("majorName", student.getMajorName());
+                resultMap.put("classId", student.getClassId());
+                resultMap.put("className", student.getClassName());
+                resultMap.put("collegeId", student.getCollegeId());
+                resultMap.put("credits", student.getCredits());
+                resultMap.put("grade", student.getGrade());
+                resultMap.put("sex", student.getSex());
+                resultMap.put("lengthOfSchooling", student.getLengthOfSchooling());
+                resultMap.put("levelOfCultivation", student.getLevelOfCultivation());
+                resultMap.put("schoolStatus", student.getSchoolStatus());
+                resultMap.put("timeOfEnrollment", student.getTimeOfEnrollment());
+                resultMap.put("nation", student.getNation());
+                resultMap.put("mailingAddress", student.getMailingAddress());
+                resultMap.put("homeTelephone", student.getHomeTelephone());
+                resultMap.put("idCard", student.getIdCard());
+                resultMap.put("qqNumber", student.getQqNumber());
+            }
+            if (classTable.getClassId().equals(student.getClassId()) && classTable != null && teacher.getTeacherNumber().equals(classTable.getTeacherNumber())) {
+                resultMap.put("className", classTable.getClassName());
+            }
+            College college = collegeMapper.selectById(student.getCollegeId());
+            if (college != null && teacher.getTeacherNumber().equals(classTable.getTeacherNumber())) {
+                resultMap.put("collegeName", college.getCollegeName());
+            }
+            if (!resultMap.isEmpty()) {
+                resultList.add(resultMap);
+            }
 
+        }
+        return resultList;
+    }
 }

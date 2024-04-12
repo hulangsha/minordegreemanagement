@@ -22,5 +22,15 @@
             #{courseId}
         </foreach>
     </select>
+    <select id="selectByMajorCode" resultType="com.sicau.minordegreemanagement.facade.entity.Course">
+        select * from t_course where major_code = #{majorCode}
+    </select>
+    <select id="selectCourseInfoByCourseId" resultType="com.sicau.minordegreemanagement.facade.entity.Course" parameterType="java.util.List">
+        select * from t_course
+        where course_id not in
+        <foreach collection="courseIdList" separator="," open="(" close=")" item="courseId">
+            #{courseId}
+        </foreach>
+    </select>
 
 </mapper>

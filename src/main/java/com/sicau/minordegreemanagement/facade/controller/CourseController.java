@@ -63,5 +63,15 @@ public class CourseController {
         return new Result<>().success().put(unTokenCourseList);
     }
 
+    @GetMapping("/getCourseSelectionInfo")
+    @ApiOperation(tags = "网上选课", value = "网上选课信息", notes = "需要将自己的id传入")
+    public Result<?> getCourseSelection(@RequestParam Integer userId) {
+        List<Course> courseSelectionList = courseService.getCourseSelection(userId);
+        if (courseSelectionList.isEmpty()) {
+            return new Result<>().fail();
+        }
+        return new Result<>().success().put(courseSelectionList);
+    }
+
 
 }

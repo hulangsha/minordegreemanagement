@@ -21,4 +21,6 @@ public interface CourseService extends IService<Course> {
     List<Map<String, Object>> getTokenCourseInfo(Integer userId);
 
     List<Map<String, Object>> getUnTokenCourseInfo(Integer userId);
+
+    List<Course> getCourseSelection(Integer userId);
 }

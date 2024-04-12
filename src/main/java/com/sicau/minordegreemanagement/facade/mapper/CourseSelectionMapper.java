@@ -18,4 +18,5 @@ public interface CourseSelectionMapper extends BaseMapper<CourseSelection> {
     List<CourseSelection> getCourseSelectionInfo(Integer userId);
 
     List<CourseSelection> selectByUserId(Integer userId);
+
 }

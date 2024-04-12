@@ -56,7 +56,7 @@ public class MinorDegree implements Serializable {
 
 
     /**
-     * 课程名称
+     * 申请辅修人
      */
     @TableField("user_id")
     private Integer userId;

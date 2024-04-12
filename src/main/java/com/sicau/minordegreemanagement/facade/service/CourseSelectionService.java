@@ -1,7 +1,10 @@
 package com.sicau.minordegreemanagement.facade.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sicau.minordegreemanagement.facade.entity.Course;
 import com.sicau.minordegreemanagement.facade.entity.CourseSelection;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.sicau.minordegreemanagement.facade.entity.CourseSelection;
  */
 public interface CourseSelectionService extends IService<CourseSelection> {
 
+    List<Course> getCourseSelection(Integer userId);
 }

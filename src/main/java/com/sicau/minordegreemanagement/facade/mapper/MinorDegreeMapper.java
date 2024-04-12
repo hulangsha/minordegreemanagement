@@ -13,4 +13,5 @@ import com.sicau.minordegreemanagement.facade.entity.MinorDegree;
  */
 public interface MinorDegreeMapper extends BaseMapper<MinorDegree> {
 
+    MinorDegree selectByStudentId(Integer userId);
 }

@@ -16,5 +16,8 @@
     <sql id="Base_Column_List">
         minor_degree_id, college_id, major_id, major_name, college_name, user_id
     </sql>
+    <select id="selectByStudentId" resultType="com.sicau.minordegreemanagement.facade.entity.MinorDegree">
+        select * from t_minor_degree where user_id = #{userId}
+    </select>
 
 </mapper>

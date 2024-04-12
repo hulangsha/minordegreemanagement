@@ -4,12 +4,17 @@ package com.sicau.minordegreemanagement.facade.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.sicau.minordegreemanagement.common.result.Result;
 import com.sicau.minordegreemanagement.facade.entity.Student;
+import com.sicau.minordegreemanagement.facade.entity.User;
 import com.sicau.minordegreemanagement.facade.service.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -51,5 +56,25 @@ public class StudentController {
             throw new RuntimeException(e);
         }
         return new Result<>().success().put(resultJSON);
+    }
+
+    @GetMapping("/getClassGrade")
+    @ApiOperation(tags = "学生管理", value = "学生信息管理", notes = "不需要参数")
+    public Result<?> getClassGradeInfo () {
+        if (!SecurityUtils.getSubject().isAuthenticated()) {
+            return new Result<>().fail();
+        }
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        List<Map<String, Object>> studentList = null;
+        try {
+            studentList = studentService.getStudentInfo(user.getUserId());
+        } catch (Exception e) {
+            log.info("妈的个巴子，你咋啦：{}", e);
+            throw new RuntimeException(e);
+        }
+        if (studentList.isEmpty()) {
+            return new Result<>().fail();
+        }
+        return new Result<>().success().put(studentList);
     }
 }

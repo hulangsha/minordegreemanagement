@@ -53,7 +53,7 @@ public class Graduation implements Serializable {
      * 论文状态；0完成，1未完成
      */
     @TableField("thesis_state")
-    private LocalDateTime thesisState;
+    private String thesisState;
 
     /**
      * 开题状态：0完成，1为完成
