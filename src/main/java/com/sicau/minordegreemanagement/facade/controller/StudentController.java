@@ -59,7 +59,7 @@ public class StudentController {
     }
 
     @GetMapping("/getClassGrade")
-    @ApiOperation(tags = "学生管理", value = "学生信息管理", notes = "不需要参数")
+    @ApiOperation(tags = "班级管理", value = "学生信息管理,班主任下面的学生", notes = "不需要参数")
     public Result<?> getClassGradeInfo () {
         if (!SecurityUtils.getSubject().isAuthenticated()) {
             return new Result<>().fail();
