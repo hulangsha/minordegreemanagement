@@ -2,8 +2,10 @@ package com.sicau.minordegreemanagement.facade.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sicau.minordegreemanagement.common.component.CommonCode;
 import com.sicau.minordegreemanagement.facade.entity.Graduation;
 import com.sicau.minordegreemanagement.facade.mapper.GraduationMapper;
+import com.sicau.minordegreemanagement.facade.mapper.StudentMapper;
 import com.sicau.minordegreemanagement.facade.service.GraduationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,9 @@ public class GraduationServiceImpl extends ServiceImpl<GraduationMapper, Graduat
 
     @Autowired
     private GraduationMapper graduationMapper;
+
+    @Autowired
+    private StudentMapper studentMapper;
     @Override
     public List<Map<Integer, Integer>> getPlanCount() {
         QueryWrapper<Graduation> queryWrapper = new QueryWrapper<>();
@@ -49,5 +54,25 @@ public class GraduationServiceImpl extends ServiceImpl<GraduationMapper, Graduat
             resultList.add(resultMap);
         }
         return resultList;
+    }
+
+    @Override
+    public List<Graduation> getGraduationInfo(String collegeName, String checkState) {
+        QueryWrapper<Graduation> graduationQueryWrapper = new QueryWrapper<>();
+        List<Graduation> graduationList = null;
+        if (checkState.equals(0)) {
+            graduationQueryWrapper.eq("thesis_state", CommonCode.CONST_NUMBER_ZERO.getCode())
+                    .eq("opening_report_state", CommonCode.CONST_NUMBER_ZERO.getCode())
+                    .le("credit_count", 85)
+                    .or(wrapper -> wrapper.eq("college_name", collegeName));
+            graduationList = graduationMapper.selectList(graduationQueryWrapper);
+        } else {
+            graduationQueryWrapper.eq("college_name", collegeName)
+                    .or(wrapper -> wrapper.eq("thesis_state", CommonCode.CONST_NUMBER_ZERO.getCode())
+                            .eq("opening_report_state", CommonCode.CONST_NUMBER_ZERO.getCode())
+                            .ge("credit_count", 85));
+            graduationList = graduationMapper.selectList(graduationQueryWrapper);
+        }
+        return graduationList;
     }
 }

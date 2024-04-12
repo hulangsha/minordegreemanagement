@@ -69,4 +69,11 @@ public class Graduation implements Serializable {
     private BigDecimal creditCount;
 
 
+    /**
+     * 学分统计
+     */
+    @TableField("college_name")
+    private String collegeName;
+
+
 }

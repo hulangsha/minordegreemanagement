@@ -11,11 +11,12 @@
         <result column="thesis_state" property="thesisState" />
         <result column="opening_report_state" property="openingReportState" />
         <result column="credit_count" property="creditCount" />
+        <result column="college_name" property="collegeName" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        graduation_id, student_id, thesis_title, thesis_advisor_id, thesis_state, opening_report_state, credit_count
+        graduation_id, student_id, thesis_title, thesis_advisor_id, thesis_state, opening_report_state, credit_count, college_name
     </sql>
 
 </mapper>

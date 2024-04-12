@@ -2,6 +2,7 @@ package com.sicau.minordegreemanagement.facade.controller;
 
 
 import com.sicau.minordegreemanagement.common.result.Result;
+import com.sicau.minordegreemanagement.facade.entity.Graduation;
 import com.sicau.minordegreemanagement.facade.service.GradeService;
 import com.sicau.minordegreemanagement.facade.service.GraduationService;
 import io.swagger.annotations.Api;
@@ -35,10 +36,13 @@ public class GraduationController {
     private GraduationService graduationService;
 
     @GetMapping("/getGraduationInfo")
-    @ApiOperation(value = "毕业审核", notes = "需要传递的参数 必须要的是 学院名称和审核状态")
+    @ApiOperation(value = "毕业审核", notes = "需要传递的参数 必须要的是 学院名称和审核状态,checkState只能是0,1；0合格，1不合格")
     public Result<?> getGraduationInfo(@RequestParam String collegeName, String checkState){
-
-        return null;
+        List<Graduation> graduationList = graduationService.getGraduationInfo(collegeName, checkState);
+        if (!graduationList.isEmpty()) {
+            return new Result<>().success().put(graduationList);
+        }
+        return new Result<>().fail();
     }
 
     @GetMapping("/getPlan")
