@@ -33,8 +33,8 @@ public class Teacher implements Serializable {
     /**
      * 教师姓名
      */
-    @TableField("name")
-    private String name;
+    @TableField("teacher_name")
+    private String teacherName;
 
     /**
      * 教师编号
@@ -48,11 +48,6 @@ public class Teacher implements Serializable {
     @TableField("major")
     private String major;
 
-    /**
-     * 所授班级
-     */
-    @TableField("class_code")
-    private String classCode;
 
 
 }

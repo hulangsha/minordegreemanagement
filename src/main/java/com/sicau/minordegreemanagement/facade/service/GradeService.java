@@ -17,4 +17,6 @@ import java.util.Map;
 public interface GradeService extends IService<Grade> {
 
     List<Map<String, Object>> getGradeInfoList(Integer userId);
+
+    List<Map<String, Object>> getClassGradeInfo(Integer userId);
 }

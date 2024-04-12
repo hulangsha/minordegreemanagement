@@ -56,7 +56,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             }
             Teacher teacher = teacherMapper.selectById(course.getTeacherId());
             if (teacher != null) {
-                resultMap.put("teacherName", teacher.getName());
+                resultMap.put("teacherName", teacher.getTeacherName());
             }
             resultMap.put("courseId", course.getCourseId());
             resultMap.put("courseName", course.getCourseName());
@@ -94,7 +94,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             }
             Teacher teacher = teacherMapper.selectById(course.getTeacherId());
             if (teacher != null) {
-                resultMap.put("teacherName", teacher.getName());
+                resultMap.put("teacherName", teacher.getTeacherName());
             }
             resultMap.put("courseId", course.getCourseId());
             resultMap.put("courseName", course.getCourseName());
@@ -132,7 +132,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             }
             Teacher teacher = teacherMapper.selectById(course.getTeacherId());
             if (teacher != null) {
-                resultMap.put("teacherName", teacher.getName());
+                resultMap.put("teacherName", teacher.getTeacherName());
             }
             resultMap.put("courseId", course.getCourseId());
             resultMap.put("courseName", course.getCourseName());

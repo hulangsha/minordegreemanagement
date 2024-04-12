@@ -5,15 +5,14 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sicau.minordegreemanagement.facade.entity.Teacher">
         <id column="teacher_id" property="teacherId" />
-        <result column="name" property="name" />
+        <result column="teacher_name" property="teacherName" />
         <result column="teacher_number" property="teacherNumber" />
         <result column="major" property="major" />
-        <result column="class_code" property="classCode" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        teacher_id, name, teacher_number, major, class
+        teacher_id, teacher_name, teacher_number, major
     </sql>
 
 </mapper>

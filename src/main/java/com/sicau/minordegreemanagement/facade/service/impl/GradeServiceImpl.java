@@ -1,14 +1,9 @@
 package com.sicau.minordegreemanagement.facade.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sicau.minordegreemanagement.facade.entity.Course;
-import com.sicau.minordegreemanagement.facade.entity.Grade;
-import com.sicau.minordegreemanagement.facade.entity.Student;
-import com.sicau.minordegreemanagement.facade.entity.User;
-import com.sicau.minordegreemanagement.facade.mapper.CourseMapper;
-import com.sicau.minordegreemanagement.facade.mapper.GradeMapper;
-import com.sicau.minordegreemanagement.facade.mapper.StudentMapper;
-import com.sicau.minordegreemanagement.facade.mapper.UserMapper;
+import com.sicau.minordegreemanagement.facade.entity.*;
+import com.sicau.minordegreemanagement.facade.mapper.*;
 import com.sicau.minordegreemanagement.facade.service.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +32,9 @@ public class GradeServiceImpl extends ServiceImpl<GradeMapper, Grade> implements
 
     @Autowired
     private CourseMapper courseMapper;
+
+    @Autowired
+    private TeacherMapper teacherMapper;
     @Override
     public List<Map<String, Object>> getGradeInfoList(Integer userId) {
         List<Grade> gradeList = gradeMapper.queryGradeInfoList(userId);
@@ -61,6 +59,36 @@ public class GradeServiceImpl extends ServiceImpl<GradeMapper, Grade> implements
             resultMap.put("minorDegreeState", grade.getMinorDegreeState());
             resultList.add(resultMap);
 
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<Map<String, Object>> getClassGradeInfo(Integer userId) {
+        QueryWrapper<Grade> queryWrapper = new QueryWrapper<>();
+        List<Grade> gradeList = this.list(queryWrapper);
+        if (gradeList.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        for (Grade grade : gradeList) {
+            Course course = courseMapper.selectById(grade.getCourseId());
+            Integer teacherId = course.getTeacherId();
+            HashMap<String, Object> resultMap = new HashMap<>();
+            Teacher teacher = teacherMapper.selectById(userId);
+            if (null != teacher && teacher.getTeacherId().equals(teacherId)) {
+                resultMap.put("teacherName", teacher.getTeacherName());
+                resultMap.put("gradeId", grade.getGradeId());
+                resultMap.put("studentId", grade.getStudentId());
+                resultMap.put("courseId", grade.getCourseId());
+                resultMap.put("grade", grade.getGrade());
+                resultMap.put("minorDegreeState", grade.getMinorDegreeState());
+            }
+            if (course != null && teacher.getTeacherId().equals(teacherId)) {
+                resultMap.put("courseName", course.getCourseName());
+            }
+            resultList.add(resultMap);
         }
         return resultList;
     }

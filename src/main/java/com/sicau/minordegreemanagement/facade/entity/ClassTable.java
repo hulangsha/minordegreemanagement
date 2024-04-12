@@ -19,8 +19,8 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_class")
-public class Class implements Serializable {
+@TableName("t_class_table")
+public class ClassTable implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,6 +35,12 @@ public class Class implements Serializable {
      */
     @TableField("class_name")
     private String className;
+
+    /**
+     * 教师编号
+     */
+    @TableField("teacher_number")
+    private String teacherNumber;
 
 
 }

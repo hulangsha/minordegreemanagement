@@ -1,7 +1,7 @@
 package com.sicau.minordegreemanagement.facade.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.sicau.minordegreemanagement.facade.entity.Class;
+import com.sicau.minordegreemanagement.facade.entity.ClassTable;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @author Wang mengna：2024/3/20
  * @since 2024-04-11
  */
-public interface ClassService extends IService<Class> {
+public interface ClassTableService extends IService<ClassTable> {
 
-    List<java.lang.Class> getClassInfoList();
+    List<ClassTable> getClassInfoList(String roleCode, Integer userId);
 }
