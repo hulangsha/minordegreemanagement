@@ -3,6 +3,9 @@ package com.sicau.minordegreemanagement.facade.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sicau.minordegreemanagement.facade.entity.Graduation;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +16,5 @@ import com.sicau.minordegreemanagement.facade.entity.Graduation;
  */
 public interface GraduationService extends IService<Graduation> {
 
+    List<Map<Integer, Integer>> getPlanCount();
 }

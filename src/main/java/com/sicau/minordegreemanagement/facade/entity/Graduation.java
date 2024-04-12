@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -65,7 +66,7 @@ public class Graduation implements Serializable {
      * 学分统计
      */
     @TableField("credit_count")
-    private String creditCount;
+    private BigDecimal creditCount;
 
 
 }
