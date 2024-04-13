@@ -49,7 +49,7 @@ public class GraduationController {
     @ApiOperation(value = "进度统计", notes = "不要参数")
     public Result<?> getPlanCount() {
         List<Map<Integer, Integer>> result = graduationService.getPlanCount();
-        if (!result.isEmpty()) {
+        if (result.isEmpty()) {
             return new Result<>().fail();
         }
         return new Result<>().success().put(result);
