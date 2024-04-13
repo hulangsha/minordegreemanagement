@@ -48,7 +48,7 @@ public class GraduationController {
     @GetMapping("/getPlan")
     @ApiOperation(value = "进度统计", notes = "不要参数")
     public Result<?> getPlanCount() {
-        List<Map<Integer, Integer>> result = graduationService.getPlanCount();
+        List<Map<Integer, Object>> result = graduationService.getPlanCount();
         if (result.isEmpty()) {
             return new Result<>().fail();
         }

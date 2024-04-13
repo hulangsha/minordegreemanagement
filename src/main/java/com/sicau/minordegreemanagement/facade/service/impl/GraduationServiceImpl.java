@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sicau.minordegreemanagement.common.component.CommonCode;
 import com.sicau.minordegreemanagement.facade.entity.Graduation;
+import com.sicau.minordegreemanagement.facade.entity.Student;
 import com.sicau.minordegreemanagement.facade.mapper.GraduationMapper;
 import com.sicau.minordegreemanagement.facade.mapper.StudentMapper;
 import com.sicau.minordegreemanagement.facade.service.GraduationService;
@@ -33,13 +34,14 @@ public class GraduationServiceImpl extends ServiceImpl<GraduationMapper, Graduat
     @Autowired
     private StudentMapper studentMapper;
     @Override
-    public List<Map<Integer, Integer>> getPlanCount() {
+    public List<Map<Integer , Object>> getPlanCount() {
         QueryWrapper<Graduation> queryWrapper = new QueryWrapper<>();
         List<Graduation> graduationList = graduationMapper.selectList(queryWrapper);
-        List<Map<Integer, Integer>> resultList = new ArrayList<>();
+        List<Map<Integer, Object>> resultList = new ArrayList<>();
         for (Graduation graduation : graduationList) {
+            Student student = studentMapper.selectById(graduation.getStudentId());
             Integer countNumber = 0;
-            HashMap<Integer, Integer> resultMap = new HashMap<>();
+            HashMap<Integer, Object> resultMap = new HashMap<>();
             if (graduation.getThesisState().equals("0")) {
                 countNumber++;
             }
@@ -50,7 +52,8 @@ public class GraduationServiceImpl extends ServiceImpl<GraduationMapper, Graduat
             if (flag >= 0) {
                 countNumber++;
             }
-            resultMap.put(graduation.getStudentId(), countNumber);
+            student.setCheckState(countNumber.toString());
+            resultMap.put(student.getStudentId(), student);
             resultList.add(resultMap);
         }
         return resultList;

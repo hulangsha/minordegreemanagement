@@ -141,4 +141,12 @@ public class Student implements Serializable {
     private Integer qqNumber;
 
 
+
+    /**
+     * 毕业状态
+     */
+    @TableField("check_state")
+    private String checkState;
+
+
 }

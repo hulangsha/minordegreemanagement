@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface GraduationService extends IService<Graduation> {
 
-    List<Map<Integer, Integer>> getPlanCount();
+    List<Map<Integer, Object>> getPlanCount();
 
     List<Graduation> getGraduationInfo(String collegeName, String checkState);
 }
