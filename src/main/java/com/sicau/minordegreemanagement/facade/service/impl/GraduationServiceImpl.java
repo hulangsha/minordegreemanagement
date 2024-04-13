@@ -40,10 +40,10 @@ public class GraduationServiceImpl extends ServiceImpl<GraduationMapper, Graduat
         for (Graduation graduation : graduationList) {
             Integer countNumber = 0;
             HashMap<Integer, Integer> resultMap = new HashMap<>();
-            if (graduation.getThesisState().equals(0)) {
+            if (graduation.getThesisState().equals("0")) {
                 countNumber++;
             }
-            if (graduation.getOpeningReportState().equals(0)) {
+            if (graduation.getOpeningReportState().equals("0")) {
                 countNumber++;
             }
             int flag = graduation.getCreditCount().compareTo(BigDecimal.valueOf(85));
