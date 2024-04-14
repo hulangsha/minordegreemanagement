@@ -63,7 +63,7 @@ public class GraduationServiceImpl extends ServiceImpl<GraduationMapper, Graduat
         QueryWrapper<Graduation> graduationQueryWrapper = new QueryWrapper<>();
         BigDecimal bigDecimal = BigDecimal.valueOf(85.00);
         List<Graduation> graduationList = null;
-        if (checkState.equals(0)) {
+        if (checkState.equals("0")) {
             graduationQueryWrapper.eq("thesis_state", CommonCode.CONST_NUMBER_ZERO.getCode())
                     .eq("opening_report_state", CommonCode.CONST_NUMBER_ZERO.getCode())
                     .ge("credit_count", 85)

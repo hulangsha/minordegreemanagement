@@ -1,20 +1,30 @@
 package com.sicau.minordegreemanagement.facade.controller;
 
 
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.alibaba.fastjson.JSONObject;
 import com.sicau.minordegreemanagement.common.result.Result;
 import com.sicau.minordegreemanagement.facade.entity.Student;
 import com.sicau.minordegreemanagement.facade.entity.User;
+import com.sicau.minordegreemanagement.facade.service.GradeService;
 import com.sicau.minordegreemanagement.facade.service.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>

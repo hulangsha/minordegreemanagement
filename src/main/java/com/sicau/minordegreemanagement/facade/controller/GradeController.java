@@ -1,6 +1,9 @@
 package com.sicau.minordegreemanagement.facade.controller;
 
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.sicau.minordegreemanagement.common.result.Result;
 import com.sicau.minordegreemanagement.facade.entity.Grade;
 import com.sicau.minordegreemanagement.facade.entity.User;
@@ -8,14 +11,18 @@ import com.sicau.minordegreemanagement.facade.service.GradeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -55,5 +62,63 @@ public class GradeController {
             return new Result<>().fail();
         }
         return new Result<>().success().put(gradeList);
+    }
+
+    @PostMapping("/gradeExport")
+    @ApiOperation(tags = "导出模块", value = "班级成绩信息导出", notes = "不需要参数")
+    public void exportBedInf(HttpServletResponse response) throws ClassNotFoundException, IOException {
+        ExcelWriter writer = ExcelUtil.getWriter();
+        if (!SecurityUtils.getSubject().isAuthenticated()) {
+            return;
+        }
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        List<Map<String, Object>> classGradeInfo = gradeService.getClassGradeInfo(user.getUserId());
+//        List<Map<String, Object>> rows = bedInfs.stream().map(item -> {
+//            Map<String, Object> maps = new HashMap<>();
+//            maps.put("id", item.getId().toString());
+//            maps.put("floor", item.getFloor());
+//            maps.put("room", item.getRoom());
+//            maps.put("code", item.getCode());
+//            maps.put("type", item.getType());
+//            maps.put("status", item.getStatus());
+//            maps.put("¥price", item.getPrice());
+//            maps.put("remark", item.getRemark());
+//            // 格式化日期createTime
+//            maps.put("createTime", DateUtil.format(item.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+//            maps.put("updateTime", DateUtil.format(item.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+//            maps.put("deleted", item.getDeleted());
+//            return maps;
+//        }).collect(Collectors.toList());
+
+        // Title
+        int columns = Class.forName("com.sicau.minordegreemanagement.facade.vo.GradeExportInfo").getDeclaredFields().length;
+        writer.merge(columns - 1, "班级成绩");
+
+        // Header
+        writer.addHeaderAlias("gradeId", "成绩id");
+        writer.addHeaderAlias("studentId", "学生id");
+        writer.addHeaderAlias("courseId", "课程id");
+        writer.addHeaderAlias("courseName", "课程名称");
+        writer.addHeaderAlias("grade", "成绩");
+        writer.addHeaderAlias("minorDegreeState", "辅修状态");
+        writer.addHeaderAlias("teacherName", "教师名称");
+
+        // Body 设置表格列的宽度
+        //writer.setColumnWidth(0, 30);
+        //writer.setColumnWidth(1, 30);
+        //writer.setColumnWidth(2, 30);
+        //writer.setColumnWidth(3, 30);
+        //writer.setColumnWidth(4, 30);
+        writer.write(classGradeInfo, true);
+
+        // 设置浏览器响应头
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        //response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
+        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode("班级成绩信息表-" + DateUtil.today() + ".xls", "utf-8"));
+        response.setHeader("Access-Control-Expose-Headers","Content-disposition");
+        ServletOutputStream out = response.getOutputStream();
+        writer.flush(out, true);
+        writer.close();
+        IOUtils.closeQuietly(out);
     }
 }
