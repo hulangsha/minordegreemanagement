@@ -164,7 +164,7 @@ public class GradeController {
     }
 
     @PostMapping("/courseGradeExport")
-    @ApiOperation(tags = "导出模块", value = "个人成绩信息导出", notes = "不需要参数")
+    @ApiOperation(tags = "导出模块", value = "已修课程信息导出", notes = "不需要参数")
     public void exportCourseGrade(HttpServletResponse response) throws ClassNotFoundException, IOException {
         ExcelWriter writer = ExcelUtil.getWriter();
         if (!SecurityUtils.getSubject().isAuthenticated()) {
@@ -191,7 +191,7 @@ public class GradeController {
 
         // 设置浏览器响应头
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode("个人课程信息表-" + DateUtil.today() + ".xls", "utf-8"));
+        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode("已修课程表-" + DateUtil.today() + ".xls", "utf-8"));
         response.setHeader("Access-Control-Expose-Headers","Content-disposition");
         ServletOutputStream out = response.getOutputStream();
         writer.flush(out, true);
