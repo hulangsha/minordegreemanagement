@@ -7,6 +7,7 @@ import cn.hutool.poi.excel.ExcelWriter;
 import com.sicau.minordegreemanagement.common.result.Result;
 import com.sicau.minordegreemanagement.facade.entity.Grade;
 import com.sicau.minordegreemanagement.facade.entity.User;
+import com.sicau.minordegreemanagement.facade.service.CourseService;
 import com.sicau.minordegreemanagement.facade.service.GradeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,6 +41,9 @@ public class GradeController {
     @Autowired
     private GradeService gradeService;
 
+    @Autowired
+    private CourseService courseService;
+
     @GetMapping("/getGradeInfo")
     @ApiOperation(value = "查询成绩", notes = "需要传输自己的user_id")
     public Result<?> getGradeInfo (@RequestParam Integer userId) {
@@ -64,9 +68,9 @@ public class GradeController {
         return new Result<>().success().put(gradeList);
     }
 
-    @PostMapping("/gradeExport")
+    @PostMapping("/classGradeExport")
     @ApiOperation(tags = "导出模块", value = "班级成绩信息导出", notes = "不需要参数")
-    public void exportBedInf(HttpServletResponse response) throws ClassNotFoundException, IOException {
+    public void exportClassGrade(HttpServletResponse response) throws ClassNotFoundException, IOException {
         ExcelWriter writer = ExcelUtil.getWriter();
         if (!SecurityUtils.getSubject().isAuthenticated()) {
             return;
@@ -115,6 +119,76 @@ public class GradeController {
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         //response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
         response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode("班级成绩信息表-" + DateUtil.today() + ".xls", "utf-8"));
+        response.setHeader("Access-Control-Expose-Headers","Content-disposition");
+        ServletOutputStream out = response.getOutputStream();
+        writer.flush(out, true);
+        writer.close();
+        IOUtils.closeQuietly(out);
+    }
+
+    @PostMapping("/studentGradeExport")
+    @ApiOperation(tags = "导出模块", value = "个人成绩信息导出", notes = "不需要参数")
+    public void exportStudentGrade(HttpServletResponse response) throws ClassNotFoundException, IOException {
+        ExcelWriter writer = ExcelUtil.getWriter();
+        if (!SecurityUtils.getSubject().isAuthenticated()) {
+            return;
+        }
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        List<Map<String, Object>> studentGradeListInfo = gradeService.getGradeInfoList(user.getUserId());
+
+        int columns = Class.forName("com.sicau.minordegreemanagement.facade.vo.StudentGradeExportInfo").getDeclaredFields().length;
+        writer.merge(columns - 1, "个人成绩信息");
+
+        // Header
+        writer.addHeaderAlias("gradeId", "成绩id");
+        writer.addHeaderAlias("studentId", "学生id");
+        writer.addHeaderAlias("courseId", "课程id");
+        writer.addHeaderAlias("courseName", "课程名称");
+        writer.addHeaderAlias("grade", "成绩");
+        writer.addHeaderAlias("minorDegreeState", "辅修状态");
+        writer.addHeaderAlias("studentName", "学生姓名");
+
+        writer.write(studentGradeListInfo, true);
+
+        // 设置浏览器响应头
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode("个人成绩信息表-" + DateUtil.today() + ".xls", "utf-8"));
+        response.setHeader("Access-Control-Expose-Headers","Content-disposition");
+        ServletOutputStream out = response.getOutputStream();
+        writer.flush(out, true);
+        writer.close();
+        IOUtils.closeQuietly(out);
+    }
+
+    @PostMapping("/courseGradeExport")
+    @ApiOperation(tags = "导出模块", value = "个人成绩信息导出", notes = "不需要参数")
+    public void exportCourseGrade(HttpServletResponse response) throws ClassNotFoundException, IOException {
+        ExcelWriter writer = ExcelUtil.getWriter();
+        if (!SecurityUtils.getSubject().isAuthenticated()) {
+            return;
+        }
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        List<Map<String, Object>> studentCourseInfoList = courseService.getTokenCourseInfo(user.getUserId());
+
+
+        int columns = Class.forName("com.sicau.minordegreemanagement.facade.vo.CourseGradeInfo").getDeclaredFields().length;
+        writer.merge(columns - 1, "个人成绩信息");
+
+        // Header
+        writer.addHeaderAlias("courseId", "课程ID");
+        writer.addHeaderAlias("courseName", "课程名称");
+        writer.addHeaderAlias("courseCode", "课程代码");
+        writer.addHeaderAlias("majorCode", "专业代码");
+        writer.addHeaderAlias("majorName", "专业名称");
+        writer.addHeaderAlias("teacherId", "科任教师ID");
+        writer.addHeaderAlias("teacherName", "教师姓名");
+
+
+        writer.write(studentCourseInfoList, true);
+
+        // 设置浏览器响应头
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode("个人课程信息表-" + DateUtil.today() + ".xls", "utf-8"));
         response.setHeader("Access-Control-Expose-Headers","Content-disposition");
         ServletOutputStream out = response.getOutputStream();
         writer.flush(out, true);

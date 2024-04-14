@@ -1,11 +1,6 @@
 package com.sicau.minordegreemanagement.facade.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -18,7 +13,7 @@ import java.io.Serializable;
  * @since 2024-04-11
  */
 @Data
-public class GradeExportInfo implements Serializable {
+public class StudentGradeExportInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,9 +43,9 @@ public class GradeExportInfo implements Serializable {
     private String minorDegreeState;
 
     /**
-     * 教师姓名
+     * 学生姓名
      */
-    private String teacherName;
+    private String studentName;
 
     /**
      * 课程名称

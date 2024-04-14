@@ -18,19 +18,9 @@ import java.io.Serializable;
  * @since 2024-04-11
  */
 @Data
-public class GradeExportInfo implements Serializable {
+public class CourseGradeInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 成绩id
-     */
-    private Integer gradeId;
-
-    /**
-     * 学生id
-     */
-    private Integer studentId;
 
     /**
      * 课程id
@@ -38,26 +28,33 @@ public class GradeExportInfo implements Serializable {
     private Integer courseId;
 
     /**
-     * 成绩
-     */
-    private Integer grade;
-
-    /**
-     * 辅修状态：0主修课程，辅修课程
-     */
-    private String minorDegreeState;
-
-    /**
-     * 教师姓名
-     */
-    private String teacherName;
-
-    /**
      * 课程名称
      */
     private String courseName;
 
+    /**
+     * 专业代码
+     */
+    private String majorCode;
 
+    /**
+     * 课程代码
+     */
+    private String courseCode;
+
+    /**
+     * 教师id
+     */
+    private Integer teacherId;
+    /**
+     * 专业名称
+     */
+    private String majorName;
+
+    /**
+     * 教师名称
+     */
+    private String teacherName;
 
 
 
