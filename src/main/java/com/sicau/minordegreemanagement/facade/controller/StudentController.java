@@ -9,6 +9,7 @@ import com.sicau.minordegreemanagement.facade.entity.Student;
 import com.sicau.minordegreemanagement.facade.entity.User;
 import com.sicau.minordegreemanagement.facade.service.GradeService;
 import com.sicau.minordegreemanagement.facade.service.StudentService;
+import com.sicau.minordegreemanagement.facade.vo.StudentInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -87,4 +88,15 @@ public class StudentController {
         }
         return new Result<>().success().put(studentList);
     }
+
+    @PostMapping("/updateStudent")
+    @ApiOperation(value = "学生个人信息更新", notes = "传入学生修改的字段信息")
+    public Result<?> getUpdateStudent(@RequestBody StudentInfo studentInfo) {
+        boolean result = studentService.getUpdateStudent(studentInfo);
+        if (result) {
+            return new Result<>().success().put(result);
+        }
+        return new Result<>().fail();
+    }
+
 }

@@ -8,9 +8,11 @@ import com.sicau.minordegreemanagement.facade.entity.User;
 import com.sicau.minordegreemanagement.facade.mapper.TeacherMapper;
 import com.sicau.minordegreemanagement.facade.mapper.UserMapper;
 import com.sicau.minordegreemanagement.facade.service.TeacherService;
+import com.sicau.minordegreemanagement.facade.vo.TeacherInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,4 +36,13 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         return this.getOne(queryWrapper);
 
     }
+
+    @Override
+    public boolean getUpdateTeacher(TeacherInfo teacherInfo) {
+        Teacher teacher = new Teacher();
+        BeanUtils.copyProperties(teacherInfo, teacher);
+        return this.updateById(teacher);
+    }
+
+
 }

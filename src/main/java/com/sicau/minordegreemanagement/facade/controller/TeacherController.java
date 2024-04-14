@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sicau.minordegreemanagement.common.result.Result;
 import com.sicau.minordegreemanagement.facade.entity.Teacher;
 import com.sicau.minordegreemanagement.facade.service.TeacherService;
+import com.sicau.minordegreemanagement.facade.vo.TeacherInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,15 @@ public class TeacherController {
         resultJSON.put("teacher", teacher);
         return new Result<>().success().put(resultJSON);
 
+    }
+
+    @PostMapping("/updateTeacher")
+    @ApiOperation(value = "教师个人信息更新", notes = "传入需要更新的字段信息")
+    public Result<?> getTeacherUpdate(@RequestBody TeacherInfo teacherInfo) {
+        boolean result = teacherService.getUpdateTeacher(teacherInfo);
+        if (result) {
+            return new Result<>().success().put(result);
+        }
+        return new Result<>().fail();
     }
 }

@@ -2,6 +2,7 @@ package com.sicau.minordegreemanagement.facade.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sicau.minordegreemanagement.facade.entity.Teacher;
+import com.sicau.minordegreemanagement.facade.vo.TeacherInfo;
 
 /**
  * <p>
@@ -14,4 +15,6 @@ import com.sicau.minordegreemanagement.facade.entity.Teacher;
 public interface TeacherService extends IService<Teacher> {
 
     Teacher getTeacherInfoById(Integer id);
+
+    boolean getUpdateTeacher(TeacherInfo teacherInfo);
 }

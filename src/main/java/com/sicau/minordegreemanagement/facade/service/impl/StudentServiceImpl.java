@@ -7,9 +7,11 @@ import com.sicau.minordegreemanagement.common.component.CommonCode;
 import com.sicau.minordegreemanagement.facade.entity.*;
 import com.sicau.minordegreemanagement.facade.mapper.*;
 import com.sicau.minordegreemanagement.facade.service.StudentService;
+import com.sicau.minordegreemanagement.facade.vo.StudentInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -143,5 +145,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
         }
         return resultList;
+    }
+
+    @Override
+    public boolean getUpdateStudent(StudentInfo studentInfo) {
+        Student student = new Student();
+        BeanUtils.copyProperties(studentInfo, student);
+        return this.updateById(student);
     }
 }
