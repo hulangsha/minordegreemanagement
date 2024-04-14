@@ -50,7 +50,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     private ClassTableMapper classTableMapper;
 
     @Override
-    public Student getStudentInfoById(Integer studentId) {
+    public Student  getStudentInfoById(Integer studentId) {
         QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("school_status", CommonCode.CONST_NUMBER_ONE.getCode())
                 .eq("student_id", studentId);
@@ -72,6 +72,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             log.info("你又有什么毛病：{}", e);
             throw new RuntimeException(e);
         }
+        //拿到课已选修课程id
         List<Integer> courseIdList = courseSelection.stream().map(CourseSelection::getCourseId).collect(Collectors.toList());
         //课程信息
         List<Course> courseList = courseMapper.selectByCourseIdList(courseIdList);

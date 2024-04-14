@@ -2,6 +2,7 @@ package com.sicau.minordegreemanagement.facade.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sicau.minordegreemanagement.facade.entity.Graduation;
+import com.sicau.minordegreemanagement.facade.entity.Student;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 public interface GraduationService extends IService<Graduation> {
 
-    List<Map<Integer, Object>> getPlanCount();
+    List<Student> getPlanCount();
 
     List<Graduation> getGraduationInfo(String collegeName, String checkState);
 }

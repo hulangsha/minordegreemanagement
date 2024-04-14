@@ -3,6 +3,7 @@ package com.sicau.minordegreemanagement.facade.controller;
 
 import com.sicau.minordegreemanagement.common.result.Result;
 import com.sicau.minordegreemanagement.facade.entity.Graduation;
+import com.sicau.minordegreemanagement.facade.entity.Student;
 import com.sicau.minordegreemanagement.facade.service.GradeService;
 import com.sicau.minordegreemanagement.facade.service.GraduationService;
 import io.swagger.annotations.Api;
@@ -48,7 +49,7 @@ public class GraduationController {
     @GetMapping("/getPlan")
     @ApiOperation(value = "进度统计", notes = "不要参数")
     public Result<?> getPlanCount() {
-        List<Map<Integer, Object>> result = graduationService.getPlanCount();
+        List<Student> result = graduationService.getPlanCount();
         if (result.isEmpty()) {
             return new Result<>().fail();
         }

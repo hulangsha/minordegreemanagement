@@ -34,10 +34,10 @@ public class GraduationServiceImpl extends ServiceImpl<GraduationMapper, Graduat
     @Autowired
     private StudentMapper studentMapper;
     @Override
-    public List<Map<Integer , Object>> getPlanCount() {
+    public List<Student> getPlanCount() {
         QueryWrapper<Graduation> queryWrapper = new QueryWrapper<>();
         List<Graduation> graduationList = graduationMapper.selectList(queryWrapper);
-        List<Map<Integer, Object>> resultList = new ArrayList<>();
+        List<Student> studentList = new ArrayList<>();
         for (Graduation graduation : graduationList) {
             Student student = studentMapper.selectById(graduation.getStudentId());
             Integer countNumber = 0;
@@ -53,10 +53,9 @@ public class GraduationServiceImpl extends ServiceImpl<GraduationMapper, Graduat
                 countNumber++;
             }
             student.setCheckState(countNumber.toString());
-            resultMap.put(student.getStudentId(), student);
-            resultList.add(resultMap);
+            studentList.add(student);
         }
-        return resultList;
+        return studentList;
     }
 
     @Override
