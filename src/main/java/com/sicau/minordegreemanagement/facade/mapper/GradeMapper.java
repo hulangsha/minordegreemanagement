@@ -2,6 +2,7 @@ package com.sicau.minordegreemanagement.facade.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sicau.minordegreemanagement.facade.entity.Grade;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface GradeMapper extends BaseMapper<Grade> {
     List<Grade> queryTokenCourse(Integer userId);
 
     List<Grade> queryGradeInfoList(Integer userId);
+
+    boolean addStudentGrade(@Param("gradeList") List<Grade> gradeList);
 }
