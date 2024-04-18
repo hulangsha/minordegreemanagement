@@ -1,6 +1,7 @@
 package com.sicau.minordegreemanagement.facade.controller;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.sicau.minordegreemanagement.common.result.Result;
@@ -9,6 +10,7 @@ import com.sicau.minordegreemanagement.facade.service.CourseService;
 import com.sicau.minordegreemanagement.facade.service.GradeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,7 @@ import org.apache.poi.ss.usermodel.*;
 @RestController
 @RequestMapping("/api/grade")
 @Api(tags = "成绩管理模块")
+@Slf4j
 public class GradeController {
 
     @Autowired
@@ -132,35 +135,49 @@ public class GradeController {
     @PostMapping("/studentGradeExport")
     @ApiOperation(tags = "导出模块", value = "个人成绩信息导出", notes = "不需要参数")
     public void exportStudentGrade(HttpServletResponse response) throws ClassNotFoundException, IOException {
-        ExcelWriter writer = ExcelUtil.getWriter();
-        if (!SecurityUtils.getSubject().isAuthenticated()) {
-            return;
+        try {
+            ExcelWriter writer = ExcelUtil.getWriter();
+            if (!SecurityUtils.getSubject().isAuthenticated()) {
+                return;
+            }
+            User user = (User) SecurityUtils.getSubject().getPrincipal();
+            List<Map<String, Object>> studentGradeListInfo = gradeService.getGradeInfoList(user.getUserId());
+
+            int columns = Class.forName("com.sicau.minordegreemanagement.facade.vo.StudentGradeExportInfo").getDeclaredFields().length;
+            writer.merge(columns - 1, "个人成绩信息");
+
+            // Header
+            writer.addHeaderAlias("gradeId", "成绩id");
+            writer.addHeaderAlias("studentId", "学生id");
+            writer.addHeaderAlias("courseId", "课程id");
+            writer.addHeaderAlias("courseName", "课程名称");
+            writer.addHeaderAlias("grade", "成绩");
+            writer.addHeaderAlias("minorDegreeState", "辅修状态");
+            writer.addHeaderAlias("studentName", "学生姓名");
+
+            writer.write(studentGradeListInfo, true);
+
+            // 设置浏览器响应头
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode("个人成绩信息表-" + DateUtil.today() + ".xls", "utf-8"));
+            response.setHeader("Access-Control-Expose-Headers","Content-disposition");
+            ServletOutputStream out = response.getOutputStream();
+            writer.flush(out, true);
+            writer.close();
+            IOUtils.closeQuietly(out);
+        } catch (SecurityException e) {
+            log.info("你麻痹1",e);
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            log.info("你麻痹1",e);
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            log.info("你麻痹3",e);
+            throw new RuntimeException(e);
+        } catch (IORuntimeException e) {
+            log.info("你麻痹4",e);
+            throw new RuntimeException(e);
         }
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        List<Map<String, Object>> studentGradeListInfo = gradeService.getGradeInfoList(user.getUserId());
-
-        int columns = Class.forName("com.sicau.minordegreemanagement.facade.vo.StudentGradeExportInfo").getDeclaredFields().length;
-        writer.merge(columns - 1, "个人成绩信息");
-
-        // Header
-        writer.addHeaderAlias("gradeId", "成绩id");
-        writer.addHeaderAlias("studentId", "学生id");
-        writer.addHeaderAlias("courseId", "课程id");
-        writer.addHeaderAlias("courseName", "课程名称");
-        writer.addHeaderAlias("grade", "成绩");
-        writer.addHeaderAlias("minorDegreeState", "辅修状态");
-        writer.addHeaderAlias("studentName", "学生姓名");
-
-        writer.write(studentGradeListInfo, true);
-
-        // 设置浏览器响应头
-        response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode("个人成绩信息表-" + DateUtil.today() + ".xls", "utf-8"));
-        response.setHeader("Access-Control-Expose-Headers","Content-disposition");
-        ServletOutputStream out = response.getOutputStream();
-        writer.flush(out, true);
-        writer.close();
-        IOUtils.closeQuietly(out);
     }
 
     @PostMapping("/courseGradeExport")
