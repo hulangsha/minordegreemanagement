@@ -6,13 +6,11 @@ import com.sicau.minordegreemanagement.facade.entity.Graduation;
 import com.sicau.minordegreemanagement.facade.entity.Student;
 import com.sicau.minordegreemanagement.facade.service.GradeService;
 import com.sicau.minordegreemanagement.facade.service.GraduationService;
+import com.sicau.minordegreemanagement.facade.vo.GraduationInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -54,5 +52,26 @@ public class GraduationController {
             return new Result<>().fail();
         }
         return new Result<>().success().put(result);
+    }
+
+
+    @PostMapping("/thesisCheck")
+    @ApiOperation(value = "论文查重", notes = "论文查重，管理员权限，不需要参数")
+    public Result<?> getThesisCheck() {
+        List<Graduation> graduationList = graduationService.getThesisCheck();
+        if (graduationList.isEmpty()) {
+            return new Result<>().fail();
+        }
+        return new Result<>().success().put(graduationList);
+    }
+
+    @PostMapping("/changeThesisState")
+    @ApiOperation(value = "更改论文查重状态", notes = "只需要改变一个参数，其他的内容不变，repetitionState状态设置为0")
+    public Result<?> getChangeThesisState(@RequestBody GraduationInfo graduationInfo) {
+        boolean result = graduationService.changeThesisState(graduationInfo);
+        if (result) {
+            return new Result<>().success().put(result);
+        }
+        return new Result<>().fail();
     }
 }

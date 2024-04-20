@@ -1,11 +1,6 @@
 package com.sicau.minordegreemanagement.facade.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -18,7 +13,7 @@ import java.io.Serializable;
  * @since 2024-04-11
  */
 @Data
-public class MinorDegreeInfo implements Serializable {
+public class QueryMinorDegree implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -57,6 +52,18 @@ public class MinorDegreeInfo implements Serializable {
      * 辅修审核状态，0同意，1不同意，默认为1
      */
     private String minorCheckState;
+    /**
+     * 当前页
+     */
+    private Long currentPage;
+
+    /**
+     * 每页显示条数
+     */
+    private Long pageSize;
+
+
+
 
 
 

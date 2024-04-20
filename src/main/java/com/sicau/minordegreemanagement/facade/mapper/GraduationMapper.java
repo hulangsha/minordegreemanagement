@@ -2,6 +2,9 @@ package com.sicau.minordegreemanagement.facade.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sicau.minordegreemanagement.facade.entity.Graduation;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.sicau.minordegreemanagement.facade.entity.Graduation;
  */
 public interface GraduationMapper extends BaseMapper<Graduation> {
 
+    List<Graduation> getRepetitionThesisList(@Param("conditionList") List<String> conditionList);
 }

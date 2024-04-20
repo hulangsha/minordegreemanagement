@@ -12,11 +12,19 @@
         <result column="opening_report_state" property="openingReportState" />
         <result column="credit_count" property="creditCount" />
         <result column="college_name" property="collegeName" />
+        <result column="repetition_state" property="repetitionState" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        graduation_id, student_id, thesis_title, thesis_advisor_id, thesis_state, opening_report_state, credit_count, college_name
+        graduation_id, student_id, thesis_title, thesis_advisor_id, thesis_state, opening_report_state, credit_count, college_name, repetition_state
     </sql>
+    <select id="getRepetitionThesisList" resultType="com.sicau.minordegreemanagement.facade.entity.Graduation" parameterType="java.util.List">
+        select * from t_graduation
+        where thesis_title in
+        <foreach collection="conditionList" item="condition" separator="," open="(" close=")">
+            #{condition}
+        </foreach>
+    </select>
 
 </mapper>

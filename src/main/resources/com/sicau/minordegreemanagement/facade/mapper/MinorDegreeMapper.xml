@@ -10,11 +10,12 @@
         <result column="major_name" property="majorName" />
         <result column="major_id" property="majorId" />
         <result column="user_id" property="userId" />
+        <result column="minor_check_state" property="minorCheckState" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        minor_degree_id, college_id, major_id, major_name, college_name, user_id
+        minor_degree_id, college_id, major_id, major_name, college_name, user_id, minor_check_state
     </sql>
     <select id="selectByStudentId" resultType="com.sicau.minordegreemanagement.facade.entity.MinorDegree">
         select * from t_minor_degree where user_id = #{userId}

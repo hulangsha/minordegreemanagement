@@ -64,6 +64,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/swagger*", "anon");
         filterChainDefinitionMap.put("/swagger*/**", "anon");
         filterChainDefinitionMap.put("/doc.html", "anon");
+        filterChainDefinitionMap.put("/websocket/**", "anon");
         //拦截剩下的其他请求
         filterChainDefinitionMap.put("/**", "authc");
 

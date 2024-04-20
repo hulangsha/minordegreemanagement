@@ -61,6 +61,12 @@ public class MinorDegree implements Serializable {
     @TableField("user_id")
     private Integer userId;
 
+    /**
+     * 辅修审核状态，0同意，1不同意，默认为1
+     */
+    @TableField("minor_check_state")
+    private String minorCheckState;
+
 
 
 }
