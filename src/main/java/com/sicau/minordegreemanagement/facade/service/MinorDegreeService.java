@@ -6,6 +6,10 @@ import com.sicau.minordegreemanagement.facade.entity.MinorDegree;
 import com.sicau.minordegreemanagement.facade.vo.MinorDegreeInfo;
 import com.sicau.minordegreemanagement.facade.vo.QueryMinorDegree;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  *  服务类
@@ -20,7 +24,7 @@ public interface MinorDegreeService extends IService<MinorDegree> {
 
     boolean minorCheck(MinorDegreeInfo minorDegreeInfo);
 
-    Page<MinorDegree> getMinorCheckPage(QueryMinorDegree queryMinorDegree);
+    List<Map<String, Object>> getMinorCheckPage();
 
     boolean refuseMinor(Integer minorDegreeId);
 }

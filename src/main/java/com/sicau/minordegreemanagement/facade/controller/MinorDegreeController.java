@@ -15,6 +15,10 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  *  前端控制器
@@ -43,11 +47,13 @@ public class MinorDegreeController {
     }
 
     @PostMapping("/minorCheckPage")
-    @ApiOperation(value = "辅修学位审核查询", notes = "辅修学位审核查询，管理员才有权限，其他人没有权限，需要两个分页参数currentPage和pageSize")
-    public PageResult minorCheckPage(@RequestBody QueryMinorDegree queryMinorDegree) {
-        Page<MinorDegree> page = minorDegreeService.getMinorCheckPage(queryMinorDegree);
-        PageResult<MinorDegree> pageResult = new PageResult<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getPages(), page.getRecords());
-        return pageResult;
+    @ApiOperation(value = "辅修学位审核查询", notes = "辅修学位审核查询，管理员才有权限，其他人没有权限，不需要参数")
+    public Result<?> minorCheckPage() {
+        List<Map<String, Object>> result = minorDegreeService.getMinorCheckPage();
+        if (result.isEmpty()) {
+            return new Result<>().fail();
+        }
+        return new Result<>().success().put(result);
 
     }
 
