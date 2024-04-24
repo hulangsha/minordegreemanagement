@@ -25,4 +25,6 @@ public interface StudentService extends IService<Student> {
     List<Map<String, Object>> getStudentInfo(Integer userId);
 
     boolean getUpdateStudent(StudentInfo studentInfo);
+
+    List<Student> getStudentInfoByTeacherId(Integer teacherId);
 }

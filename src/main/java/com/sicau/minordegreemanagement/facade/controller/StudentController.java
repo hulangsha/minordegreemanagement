@@ -99,4 +99,25 @@ public class StudentController {
         return new Result<>().fail();
     }
 
+    @GetMapping("/searchCreditStudent")
+    @ApiOperation(tags = "学分模块", value = "学生个人查询学分", notes = "传入自己的id即可,credit就是学分")
+    public Result<?> getSearchCredit(@RequestParam("studentId") Integer studentId) {
+        Student studentInfo = studentService.getStudentInfoById(studentId);
+        if (studentInfo != null) {
+            return new Result<>().success().put(studentInfo);
+        }
+        return new Result<>().fail();
+    }
+
+    @GetMapping("/searchCreditTeacher")
+    @ApiOperation(tags = "学分模块", value = "老师查询学生学分", notes = "传入自己的id即可,credit就是学分")
+    public Result<?> getSearchCreditByTeacherId(@RequestParam("teacherId") Integer teacherId) {
+        List<Student> studentInfo = studentService.getStudentInfoByTeacherId(teacherId);
+        if (!studentInfo.isEmpty()) {
+            return new Result<>().success().put(studentInfo);
+        }
+        return new Result<>().fail();
+    }
+
+
 }

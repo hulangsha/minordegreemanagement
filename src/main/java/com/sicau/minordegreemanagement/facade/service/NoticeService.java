@@ -2,6 +2,9 @@ package com.sicau.minordegreemanagement.facade.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sicau.minordegreemanagement.facade.entity.Notice;
+import com.sicau.minordegreemanagement.facade.vo.NoticeInfo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.sicau.minordegreemanagement.facade.entity.Notice;
  */
 public interface NoticeService extends IService<Notice> {
 
+    List<Notice> getNoticePage();
+
+    boolean addNotice(NoticeInfo noticeInfo);
 }

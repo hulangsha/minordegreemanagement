@@ -51,6 +51,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Autowired
     private ClassTableMapper classTableMapper;
 
+
     @Override
     public Student  getStudentInfoById(Integer studentId) {
         QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
@@ -152,5 +153,21 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         Student student = new Student();
         BeanUtils.copyProperties(studentInfo, student);
         return this.updateById(student);
+    }
+
+    @Override
+    public List<Student> getStudentInfoByTeacherId(Integer teacherId) {
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        List<Student> studentList = studentMapper.selectList(queryWrapper);
+        List<Student> resultStudent = new ArrayList<>();
+        Teacher teacher = teacherMapper.selectById(teacherId);
+        for (Student student : studentList) {
+            Integer classId = student.getClassId();
+            ClassTable classTable = classTableMapper.selectById(classId);
+            if (classTable.getTeacherNumber() == teacher.getTeacherNumber()) {
+                resultStudent.add(student);
+            }
+        }
+        return resultStudent;
     }
 }

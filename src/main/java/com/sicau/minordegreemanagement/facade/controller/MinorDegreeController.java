@@ -58,7 +58,7 @@ public class MinorDegreeController {
     }
 
     @PostMapping("/minorCheck")
-    @ApiOperation(value = "辅修申请审核", notes = "辅修申请审核只有管理员才有权限，")
+    @ApiOperation(value = "辅修申请审核", notes = "辅修申请审核只有管理员才有权限，审核的时候应该把")
     public Result<?> getMinorCheck(@RequestBody MinorDegreeInfo minorDegreeInfo) {
         boolean result = minorDegreeService.minorCheck(minorDegreeInfo);
 
