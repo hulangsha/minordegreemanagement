@@ -58,7 +58,7 @@ public class RemindController {
         return new Result<>().success().put(resultList);
     }
 
-    @GetMapping("/deleteRemind")
+    @PostMapping("/deleteRemind")
     @ApiOperation(value = "改变提醒状态", notes = "这个功能是学生被提醒之后修改了不足之处，以及论文查重之后修改自己的一个状态。也就是说将is_finish从0改为1其他不变")
     public Result<?> getRemindUpdate(@RequestBody RemindInfo remindInfo) {
         boolean result = remindService.updateThesisAndGraduationState(remindInfo);
