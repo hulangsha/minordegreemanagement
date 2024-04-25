@@ -49,5 +49,12 @@ public class RemindInfo implements Serializable {
     private Integer graduationId;
 
 
+    /**
+     * 是否完成，0未完成，1完成
+     */
+    @TableField("is_finish")
+    private String isFinish;
+
+
 
 }
