@@ -164,7 +164,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         for (Student student : studentList) {
             Integer classId = student.getClassId();
             ClassTable classTable = classTableMapper.selectById(classId);
-            if (classTable.getTeacherNumber() == teacher.getTeacherNumber()) {
+            if (classTable.getTeacherNumber().equals(teacher.getTeacherNumber())) {
                 resultStudent.add(student);
             }
         }

@@ -17,4 +17,6 @@ import java.util.List;
 public interface GraduationMapper extends BaseMapper<Graduation> {
 
     List<Graduation> getRepetitionThesisList(@Param("conditionList") List<String> conditionList);
+
+    boolean updateGraduationById(@Param("graduationId") Integer graduationId);
 }

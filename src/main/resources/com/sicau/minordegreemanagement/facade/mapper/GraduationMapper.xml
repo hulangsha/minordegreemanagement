@@ -19,6 +19,9 @@
     <sql id="Base_Column_List">
         graduation_id, student_id, thesis_title, thesis_advisor_id, thesis_state, opening_report_state, credit_count, college_name, repetition_state
     </sql>
+    <update id="updateGraduationById">
+        update t_graduation set thesis_state = 0, repetition_state = 0, opening_report_state = 0 where graduation_id = #{graduationId}
+    </update>
     <select id="getRepetitionThesisList" resultType="com.sicau.minordegreemanagement.facade.entity.Graduation" parameterType="java.util.List">
         select * from t_graduation
         where thesis_title in
